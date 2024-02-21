@@ -1,3 +1,4 @@
+// Library of Book Objects
 const myLibrary = [
     new Book("tempBook1", "tempAuthor1", 100, "read"),
     new Book("tempBook2", "tempAuthor2", 200, "read"),
@@ -5,6 +6,7 @@ const myLibrary = [
     new Book("tempBook4", "tempAuthor4", 400, "not read"),
 ];
 
+// Create Book Object
 function Book(title, author, pages, read, info) {
     this.title = title;
     this.author = author;
@@ -15,11 +17,26 @@ function Book(title, author, pages, read, info) {
     };
 }
 
+// Create library display
 function displayLibrary(Book) {
     const library = document.getElementById("book-library");
     const listElement = document.createElement("li");
+    const deleteBook = document.createElement("button");
+    deleteBook.setAttribute("class", "delete-book");
+    deleteBook.innerHTML = "Delete";
+    listElement.setAttribute("data-index", myLibrary.indexOf(Book));
+    listElement.setAttribute("class", "book");
     listElement.innerHTML = Book.info();
+    listElement.appendChild(deleteBook);
     library.appendChild(listElement);
+
+    // Create removal feature for books
+    const deleteBookButton = document.querySelectorAll(".delete-book");
+    deleteBookButton.forEach((button) => {
+    button.addEventListener("click", (event) => {
+        button.parentElement.remove();
+    })
+});
 }
 
 function clearForm(...args) {
@@ -32,8 +49,8 @@ for (var item of myLibrary) {
     displayLibrary(item);
 }
 
+// Add new book to library
 const newBookButton = document.getElementById("new-book");
-
 newBookButton.addEventListener('click', (event) => {
     let bookTitle = document.getElementById("book-title");
     let bookAuthor = document.getElementById("book-author");
@@ -44,8 +61,10 @@ newBookButton.addEventListener('click', (event) => {
     }
     else bookRead.value = "read";
     let newBook = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookRead.value);
+    myLibrary.push(newBook);
     displayLibrary(newBook);
     clearForm(bookTitle, bookAuthor, bookPages)
     bookRead.checked = false;
     event.preventDefault();
+    console.log(deleteBookButton);
 })
