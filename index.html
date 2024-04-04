@@ -12,30 +12,36 @@
         <h1>Book Library</h1>
     </header>
 
-    <aside>
-        <form>
-            <div>
-                <label for="book-title">Title</label>
-                <input type="text" id="book-title" name="book-title" placeholder="Title">
-            </div>
-            <div>
-                <label for="book-author">Title</label>
-                <input type="text" id="book-author" name="book-author" placeholder="Author">
-            </div>
-            <div>
-                <label for="book-pages">Title</label>
-                <input type="text" id="book-pages" name="book-pages" pattern="[\d]{1,5}" placeholder="100">
-            </div>
-            <div>
-                <input type="checkbox" id="book-read" name="book-read" value="read">
-                <label for="book-read">Read</label>
-            </div>
-            <button id="new-book">Submit</button>
-        </form>
-    </aside>
-
     <main>
-        <ul id="book-library"></ul>
+        <div id="book-library"></div>
+        
+        <dialog>
+            <form>
+                <div>
+                    <label for="book-title">Title</label>
+                    <input type="text" id="book-title" name="book-title" placeholder="Title">
+                </div>
+                <div>
+                    <label for="book-author">Author</label>
+                    <input type="text" id="book-author" name="book-author" placeholder="Author">
+                </div>
+                <div>
+                    <label for="book-pages">Pages</label>
+                    <input type="text" id="book-pages" name="book-pages" pattern="[\d]{1,5}" placeholder="100">
+                </div>
+                <div>
+                    <input type="radio" id="book-read" name="book-progress" value="read">
+                    <label for="book-read">Read</label>
+                    <input type="radio" id="book-unread" name="book-progress" value="unread">
+                    <label for="book-unread">Unread</label>
+                    <input type="radio" id="book-reading" name="book-progress" value="reading">
+                    <label for="book-reading">Reading</label>
+                </div>
+            </form>
+            <button>Submit</button>
+        </dialog>
+
+        <button id="new-book">New Book</button>
     </main>
 
     <footer>
