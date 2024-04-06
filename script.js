@@ -1,21 +1,27 @@
+
 // Library of Book Objects
 const myLibrary = [
-    new Book("tempBook1", "tempAuthor1", 100, "read"),
-    new Book("tempBook2", "tempAuthor2", 200, "reading"),
-    new Book("tempBook3", "tempAuthor3", 300, "unread"),
-    new Book("tempBook4", "tempAuthor4", 400, "read"),
-    new Book("tempBook5", "tempAuthor5", 500, "unread"),
-    new Book("tempBook6", "tempAuthor6", 600, "reading"),
+    // new Book("tempBook1", "tempAuthor1", 100, "read"),
+    // new Book("tempBook2", "tempAuthor2", 200, "reading"),
+    // new Book("tempBook3", "tempAuthor3", 300, "unread"),
+    // new Book("tempBook4", "tempAuthor4", 400, "read"),
+    // new Book("tempBook5", "tempAuthor5", 500, "unread"),
+    // new Book("tempBook6", "tempAuthor6", 600, "reading"),
 ];
 
 // Create Book Object
-function Book(title, author, pages, read, info) {
+function Book(title, author, pages, read,) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        return `${title} by ${author}, ${pages} pages, ${read}`;
+    this.status = function() {
+        if (this.read === "unread") {
+            this.read = "reading";
+        }
+        else {
+            this.read = "read";
+        }
     };
 }
 
@@ -28,7 +34,7 @@ function displayLibrary(Book) {
     const authorP = document.createElement("p");
     const pagesP = document.createElement("p");
     const readP = document.createElement("p");
-    const editStats = document.createElement("button");
+    const editStatus = document.createElement("button");
     const deleteBook = document.createElement("button");
 
     // Set Book Title
@@ -47,31 +53,45 @@ function displayLibrary(Book) {
     readP.innerHTML = Book.read[0].toUpperCase() + Book.read.slice(1);
     bookElement.appendChild(readP);
 
-    // Create Edit Status Button **
+    // Create Edit Status Button
+    editStatus.innerHTML = "Edit Status";
+    editStatus.setAttribute("class", "edit-status");
+    bookElement.appendChild(editStatus);
 
     // Create Delete Book Button
-    deleteBook.setAttribute("class", "delete-book");
     deleteBook.innerHTML = "Delete";
+    deleteBook.setAttribute("class", "delete-book");
     bookElement.appendChild(deleteBook);
 
     // Create Book Element
-    bookElement.setAttribute("data-index", myLibrary.indexOf(Book));
+    //bookElement.setAttribute("data-index", myLibrary.indexOf(Book));   ???
     bookElement.setAttribute("class", `book ${Book.read}`);
     library.appendChild(bookElement);
 
+    // Create read status edit feature
+    const editStatusButton = document.querySelectorAll(".edit-status");
+    const editBook = editStatusButton.item(myLibrary.indexOf(Book));
+    editBook.addEventListener("click", () => {
+        Book.status();
+        bookElement.setAttribute("class", `book ${Book.read}`); /* Duplicate Code */
+        readP.innerHTML = Book.read[0].toUpperCase() + Book.read.slice(1); /* Duplicate Code */
+    });
+
     // Create removal feature for books
     const deleteBookButton = document.querySelectorAll(".delete-book");
-    deleteBookButton.forEach((button) => {
-    button.addEventListener("click", (event) => {
-        button.parentElement.remove();
-        })
+    const delButton = deleteBookButton.item(myLibrary.indexOf(Book));
+    delButton.addEventListener("click", () => {
+        //console.log(myLibrary.indexOf(Book));
+        //myLibrary.splice(delButton.parentElement.dataset.index, 1);   ???
+        myLibrary.splice(myLibrary.indexOf(Book), 1);
+        delButton.parentElement.remove();
     });
 }
 
 
-for (var item of myLibrary) {
-    displayLibrary(item);
-}
+// for (var item of myLibrary) {
+//     displayLibrary(item);
+// }
 
 
 
@@ -101,6 +121,11 @@ submitNewBook.addEventListener('click', (event) => {
     myLibrary.push(newBook);
     displayLibrary(newBook);
     dialog.close();
-    form.reset();
+    //form.reset();
     event.preventDefault();
-})
+});
+
+const showLibraryButton = document.getElementById("show-library");
+showLibraryButton.addEventListener("click", () => {
+    console.log(myLibrary);
+});
