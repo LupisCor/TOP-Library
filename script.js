@@ -1,4 +1,12 @@
 
+// Module to format into Titlecase
+const Formatter = (function() {
+    const toTitlecase = (message) => message[0].toUpperCase() + message.slice(1);
+    return {
+        toTitlecase,
+    }
+})();
+
 // Library of Book Objects
 const myLibrary = [
     // new Book("tempBook1", "tempAuthor1", 100, "read"),
@@ -50,7 +58,8 @@ function displayLibrary(Book) {
     bookElement.appendChild(pagesP);
 
     // Set Book Read Status
-    readP.innerHTML = Book.read[0].toUpperCase() + Book.read.slice(1);
+    //readP.innerHTML = Book.read[0].toUpperCase() + Book.read.slice(1);
+    readP.innerHTML = Formatter.toTitlecase(Book.read);
     bookElement.appendChild(readP);
 
     // Create Edit Status Button
@@ -73,7 +82,7 @@ function displayLibrary(Book) {
     editBook.addEventListener("click", () => {
         Book.status();
         bookElement.setAttribute("class", `book ${Book.read}`); /* Duplicate Code */
-        readP.innerHTML = Book.read[0].toUpperCase() + Book.read.slice(1); /* Duplicate Code */
+        readP.innerHTML = Formatter.toTitlecase(Book.read); /* Duplicate Code */
     });
 
     // Create removal feature for books
