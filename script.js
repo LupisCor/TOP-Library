@@ -64,7 +64,6 @@ function displayLibrary(Book) {
     bookElement.appendChild(deleteBook);
 
     // Create Book Element
-    //bookElement.setAttribute("data-index", myLibrary.indexOf(Book));   ???
     bookElement.setAttribute("class", `book ${Book.read}`);
     library.appendChild(bookElement);
 
@@ -81,18 +80,10 @@ function displayLibrary(Book) {
     const deleteBookButton = document.querySelectorAll(".delete-book");
     const delButton = deleteBookButton.item(myLibrary.indexOf(Book));
     delButton.addEventListener("click", () => {
-        //console.log(myLibrary.indexOf(Book));
-        //myLibrary.splice(delButton.parentElement.dataset.index, 1);   ???
         myLibrary.splice(myLibrary.indexOf(Book), 1);
         delButton.parentElement.remove();
     });
 }
-
-
-// for (var item of myLibrary) {
-//     displayLibrary(item);
-// }
-
 
 
 // Add new book to library
@@ -121,7 +112,7 @@ submitNewBook.addEventListener('click', (event) => {
     myLibrary.push(newBook);
     displayLibrary(newBook);
     dialog.close();
-    //form.reset();
+    form.reset();
     event.preventDefault();
 });
 
